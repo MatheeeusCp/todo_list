@@ -11,7 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./TodoList-resolution",
     "types": [
       "webpack-env"
     ],
