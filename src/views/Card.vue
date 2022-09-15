@@ -28,13 +28,13 @@
 
 <script lang="ts">
 import {computed, ComputedRef, defineComponent, ref, Ref} from 'vue';
-import ToDoItem from "@/entities/ToDoItem";
+import ToDoItem from "../entities/ToDoItem";
 import {useStore} from "vuex";
-import InputComponent from "@/components/inputs/Input.vue";
-import ButtonSubmit from "@/components/buttons/ButtonSubmit.vue";
-import SearchComponent from "@/components/inputs/Search.vue";
-import EmptyList from "@/components/EmptyList.vue";
-import ButtonItemOption from "@/components/buttons/ButtonItemOption.vue";
+import InputComponent from "../components/inputs/Input.vue";
+import ButtonSubmit from "../components/buttons/ButtonSubmit.vue";
+import SearchComponent from "../components/inputs/Search.vue";
+import EmptyList from "../components/EmptyList.vue";
+import ButtonItemOption from "../components/buttons/ButtonItemOption.vue";
 
 export default defineComponent({
   name: 'CardComponent',
