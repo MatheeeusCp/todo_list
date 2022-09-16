@@ -1,7 +1,6 @@
 <template>
-  <div class="input-title">
-    <input id="input-title" class="input" type="text" name="text" @input="$emit('modelValue', $event.target.value)" :placeholder="text" :value="modelValue">
-  </div>
+  <!-- Criar componente -->
+ <h1></h1>
 </template>
 
 <script lang="ts">
@@ -9,17 +8,6 @@ import {defineComponent} from "vue";
 
 export default defineComponent ({
   name: "SearchComponent",
-  props: {
-    text: {
-      type: String,
-    },
-    modelValue: {
-      type: String,
-    },
-    label: {
-      type: String,
-    }
-  }
 })
 </script>
 

@@ -1,28 +1,40 @@
 <template>
   <section>
     <h1>Lista de tarefas</h1>
-    <SearchComponent @modelValue="searchToDo($event)" text="Buscar tarefa" label="Busca"/>
-    <ul v-if="filteredList.length > 0">
-      <li v-for="(todo, index) in filteredList" :key="index" :class="[todo.done ? 'select' : 'deselect']">
+
+    <!-- Criar um componente para um filtro de busca aqui -->
+
+    <ul>
+      <li v-for="(todo, index) in toDoList" :key="index" :class="[todo.done ? 'select' : 'deselect']">
         <div class="todo" @click.prevent="done(todo)">
           <div class="todo-information">
-            <input type="checkbox" :checked="todo.done">
+
+            <!-- Criar um checkbox que ficará marcado conforme a variável "done" do objeto ToDoItem-->
+
             <div class="todo-details">
               <span>{{ todo.title }}</span>
               <p>{{ todo.description }}</p>
             </div>
           </div>
           <div class="actions" @click.stop>
-            <ButtonItemOption class="edit" @clicked="edit(todo, index)"></ButtonItemOption>
-            <ButtonItemOption class="delete" @clicked="remove(todo)"></ButtonItemOption>
+
+            <!-- Substituir ambos os botões abaixo e utilizar um componente padrão para isso, utilizando $emit para
+               realizar a função correta em cada click -->
+
+            <button class="edit" @click="edit(todo, index)" />
+            <button class="delete" @click="remove(todo)" />
           </div>
         </div>
       </li>
     </ul>
-    <EmptyList v-else></EmptyList>
+
+    <!--  Criar componente de lista vazia para ser exibido -->
+
     <form @submit.prevent="submit">
       <InputComponent v-model:modelValue="toDoTask.title" text="Digite uma nova tarefa..." label="Título:"/>
-      <InputComponent v-model:modelValue="toDoTask.description" text="Digite a descrição..." label="Descrição:"/>
+
+      <!--  Criar novo campo "Descrição" para ser informado na tarefa. Utilizar componentização -->
+
       <ButtonSubmit text="salvar"/>
     </form>
   </section>
@@ -34,21 +46,16 @@ import ToDoItem from "../entities/ToDoItem";
 import {useStore} from "vuex";
 import InputComponent from "../components/inputs/Input.vue";
 import ButtonSubmit from "../components/buttons/ButtonSubmit.vue";
-import SearchComponent from "../components/inputs/Search.vue";
-import EmptyList from "../components/EmptyList.vue";
-import ButtonItemOption from "../components/buttons/ButtonItemOption.vue";
 
 export default defineComponent({
   name: 'CardComponent',
-  components: {ButtonItemOption: ButtonItemOption, EmptyList, SearchComponent, ButtonSubmit, InputComponent},
+  components: {ButtonSubmit, InputComponent},
   setup() {
     const store = useStore();
 
     const toDoTask: Ref<ToDoItem> = ref(new ToDoItem());
 
     const toDoList: ComputedRef<ToDoItem[]> = computed(() => store.getters.todoList);
-
-    const filteredList: Ref<ToDoItem[]> = ref([]);
 
     const isEdit: Ref<boolean> = ref(false);
 
@@ -69,16 +76,12 @@ export default defineComponent({
         isEdit.value = false;
         loadedTodoTask.value = null;
         toDoTask.value = new ToDoItem();
-
-        loadFiltered();
         return;
       }
 
       if (toDoTask.value.title.length) {
         store.dispatch("setTodoList", toDoTask.value);
         toDoTask.value = new ToDoItem();
-
-        loadFiltered();
       } else {
         alert("O texto da tarefa é obrigatório!")
       }
@@ -91,8 +94,6 @@ export default defineComponent({
     const remove = (todo: ToDoItem) => {
       toDoTask.value = new ToDoItem();
       store.dispatch("clearTodoList",todo);
-
-      loadFiltered();
     }
 
     const edit = (todo: ToDoItem, index: number) => {
@@ -103,37 +104,11 @@ export default defineComponent({
       loadedIndex.value = index;
     }
 
-    const searchToDo = (value: string) => {
-      search.value = value;
-
-      if (value.trim().length == 0) {
-        filteredList.value.splice(0)
-        filteredList.value.push(...toDoList.value);
-        return;
-      }
-
-      const list = toDoList.value.filter((it: ToDoItem) => {
-        return it.title.toLowerCase().startsWith(value.toLowerCase());
-      });
-
-      filteredList.value.splice(0);
-      filteredList.value.push(...list);
-    }
-
-    const loadFiltered = () => {
-      filteredList.value.splice(0);
-      filteredList.value.push(...toDoList.value);
-
-      searchToDo(search.value);
-    }
-
     return {
       toDoTask: toDoTask,
       toDoList,
       isEdit,
       search,
-      filteredList,
-      searchToDo,
       submit,
       done,
       remove,
