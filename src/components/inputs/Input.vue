@@ -49,7 +49,7 @@ label {
 .input-title {
   display: flex;
   flex-direction: column;
-  width: 65%;
+  width: 100%;
   gap: 2px;
 }
 </style>

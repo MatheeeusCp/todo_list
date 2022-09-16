@@ -1,6 +1,6 @@
 <template>
   <img src="../assets/empty_list_placeholder.png" alt="Lista vazia">
-  <span>Lista vazia</span>
+  <h4>Lista vazia</h4>
 </template>
 
 <script>
@@ -10,7 +10,14 @@ export default {
 </script>
 
 <style scoped>
-span {
-  font-family: "Comic Sans MS";
+
+h4 {
+  font-weight: 100;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  height: 120px;
 }
 </style>

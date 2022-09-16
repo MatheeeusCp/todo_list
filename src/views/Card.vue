@@ -5,15 +5,17 @@
     <ul v-if="filteredList.length > 0">
       <li v-for="(todo, index) in filteredList" :key="index" :class="[todo.done ? 'select' : 'deselect']">
         <div class="todo" @click.prevent="done(todo)">
-          <input type="checkbox" :checked="todo.done">
           <div class="todo-information">
-            <span>{{ todo.title }}</span>
-            <p>{{ todo.description }}</p>
+            <input type="checkbox" :checked="todo.done">
+            <div class="todo-details">
+              <span>{{ todo.title }}</span>
+              <p>{{ todo.description }}</p>
+            </div>
           </div>
-        <div class="actions" @click.stop>
-          <ButtonItemOption class="edit" @clicked="edit(todo, index)"></ButtonItemOption>
-          <ButtonItemOption class="delete" @clicked="remove(todo)"></ButtonItemOption>
-        </div>
+          <div class="actions" @click.stop>
+            <ButtonItemOption class="edit" @clicked="edit(todo, index)"></ButtonItemOption>
+            <ButtonItemOption class="delete" @clicked="remove(todo)"></ButtonItemOption>
+          </div>
         </div>
       </li>
     </ul>
@@ -182,14 +184,17 @@ h1 {
 }
 
 ul {
+  gap: 10px;
   padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
 li {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 .actions {
@@ -234,6 +239,8 @@ li {
 
 .todo {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
   gap: 20px;
 }
 
@@ -243,8 +250,8 @@ li {
 
 .todo-information {
   display: flex;
-  flex-direction: column;
-  min-width: 455px;
+  min-width: 100px;
+  gap: 10px;
 }
 
 .todo-information  > p {
@@ -254,8 +261,32 @@ li {
   color: gray;
 }
 
-.todo-information > span {
+.todo-details > span {
   text-align: left;
 }
 
+.todo-details{
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-details > p {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  color: gray;
+}
+
+
+@media only screen and (max-width: 1100px) {
+
+  .todo-information {
+    min-width: 100px;
+    gap: 10px;
+  }
+  .todo-details{
+    flex-direction: column;
+  }
+
+}
 </style>
