@@ -1,4 +1,5 @@
 <template>
+  <img src="../assets/empty_list_placeholder.png" alt="Lista vazia">
   <span>Lista vazia</span>
 </template>
 
@@ -10,7 +11,6 @@ export default {
 
 <style scoped>
 span {
-  padding: 30px 0;
   font-family: "Comic Sans MS";
 }
 </style>
